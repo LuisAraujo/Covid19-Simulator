@@ -1,0 +1,29 @@
+<html>
+ <head>
+ 
+ <style>
+	#maincanvas{
+		border: solid 1px #000;
+	}
+ </style>
+ </head>
+ <body>
+	<h1>COVID-19 Simulator</h1> 
+		<button>Start Simulator</button>
+		<div>
+			<input type="radio" name="mode" value="freemov">
+			<label for="freemov"> Free Movement</label>
+			<input type="radio" name="mode" value="quarpati">
+			<label for="quarpat">Quarantine Patients</label>
+			<input type="radio" name="mode" value="modisolation">
+			<label for="partisolation">Moderate Isolation</label>
+			<input type="radio" name="mode" value="sevisolation">
+			<label for="allisolation"> Severe Isolation</label>
+		</div>
+	<div>
+		<canvas id="maincanvas" width="500px" height="500px">
+		</canvas>
+	</div>
+ </body>
+ <script src="script.js"></script>
+</html>
