@@ -2,28 +2,90 @@
  <head>
  
  <style>
+	document{
+		font-family: Arial
+	}
+	#menu-conf{
+		border: 1px solid #000;
+		width: 300px;
+		display: none;
+	}
 	#maincanvas{
 		border: solid 1px #000;
 	}
+	
+	.labels{
+		border-bottom: 1px solid #aaf; width: 130px; 
+		height: 25px;
+		margin-top: 5px;
+	}
+	
+	#nhealthy{
+	  font-weight: 900;
+	  color: #79a6d2;
+	}
+	
+	#nsick{
+		font-weight: 900;
+		color: #cc2900;
+	}
+	
+	
+	#nrecovered{
+		font-weight: 900;
+		color: #ff66ff;
+	}
+	
+	#container-canvas1{
+		width: 100%;
+	}
+	
+	#container-canvas2{
+		
+	}
+	
+	#container-data{
+		float: left;
+		margin-right: 20px;
+	}
+	
  </style>
  </head>
  <body>
 	<h1>COVID-19 Simulator</h1> 
-		<button>Start Simulator</button>
-		<div>
-			<input type="radio" name="mode" value="freemov">
-			<label for="freemov"> Free Movement</label>
-			<input type="radio" name="mode" value="quarpati">
-			<label for="quarpat">Quarantine Patients</label>
-			<input type="radio" name="mode" value="modisolation">
-			<label for="partisolation">Moderate Isolation</label>
-			<input type="radio" name="mode" value="sevisolation">
-			<label for="allisolation"> Severe Isolation</label>
-		</div>
-	<div>
-		<canvas id="maincanvas" width="500px" height="500px">
+		
+	<div id="menu-conf">
+		
+		<div > Select mode </div>
+		<input type="radio" name="mode" value="freemov">
+		<label for="freemov"> Free Movement</label>
+		<input type="radio" name="mode" value="quarpati">
+		<label for="quarpat">Quarantine Patients</label>
+		<input type="radio" name="mode" value="modisolation">
+		<label for="partisolation">Moderate Isolation</label>
+		<input type="radio" name="mode" value="sevisolation">
+		<label for="allisolation"> Severe Isolation</label>
+	</div>
+	<div style="width: 100%; height: 130px;" >
+		 <div id="container-data"> 
+			 <div style="font-weight:bolder "> Count </div>
+			 <div class="labels"> Recovered <span id="nrecovered"> </span> </div>
+			 <div class="labels"> Healthy <span id="nhealthy"> </span> </div>
+			 <div class="labels"> Sick <span id="nsick"> </span> </div>
+		 </div>
+		 
+		 <div id="container-canvas2">
+			<div  style="font-weight:bolder"> Chage Over Time </div>
+			<canvas id="secoundcanvas" width="300px" height="100px"></canvas>
+		 </div>
+	</div>
+	
+	<div id="container-canvas1">
+		<canvas id="maincanvas" width="700px" height="500px">
 		</canvas>
 	</div>
+	
+	
  </body>
  <script src="script.js"></script>
 </html>

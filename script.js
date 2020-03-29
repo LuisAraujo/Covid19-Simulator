@@ -1,11 +1,31 @@
-canvas = document.getElementById("maincanvas");
-context = canvas.getContext("2d");
-levels = ["#ddd", "#f33", "#ff66ff"];
+//global vars
+levels = ["#79a6d2", "#cc2900", "#ff66ff"];
 window.directions = ["right", "left", "up", "down", "right-up","right-down", "left-down", "left-up"];
 velocity = 3;
 hours = 0;
+
+//controlling datas
 qtdinfecteds = 0;
 qtdrecovered =0;
+
+arrayQtdinfecteds = new Array(200);
+arrayQtdrecovered = new Array(200);
+
+for(var i = 0; i < 300; i++){
+	arrayQtdinfecteds[i] = 0;
+	arrayQtdrecovered[i] = 0;
+}
+
+//elements html
+nrecovered = document.getElementById("nrecovered");
+nhealthy = document.getElementById("nhealthy");
+nsick = document.getElementById("nsick");
+canvas = document.getElementById("maincanvas");
+context = canvas.getContext("2d");
+
+
+canvas2 = document.getElementById("secoundcanvas");
+context2 = canvas2.getContext("2d");
 
 
 window.requestAnimationFrame = (function(callback){	
@@ -32,8 +52,8 @@ class Person{
 	constructor(x, y){
 		
 		this.level = 0;
-		this.x = parseInt( Math.random() * 480) + 10;
-		this.y = parseInt( Math.random() * 480) + 10;
+		this.x = parseInt( Math.random() * canvas.width - 20) + 10;
+		this.y = parseInt( Math.random() * canvas.height - 20) + 10;
 		this.size = 5;
 		this.day = 0;
 		this.infected = 0;
@@ -113,7 +133,7 @@ class Person{
 			this.changeDirection();
 			this.x +=10;
 			
-		}else if(this.x > 500){
+		}else if(this.x > canvas.width){
 
 			this.changeDirection();
 			this.x -= 10;
@@ -123,7 +143,7 @@ class Person{
 			this.changeDirection();
 			this.y +=10;
 		
-		}else if(this.y > 500){
+		}else if(this.y > canvas.height){
 			
 			this.changeDirection();
 			this.y -=10;
@@ -165,7 +185,7 @@ class Person{
 }
 
 population = new Array();
-sizepopulation = 100;
+sizepopulation = 200;
 
 for(i=0; i < sizepopulation; i++)
 	population.push( new Person() );
@@ -176,30 +196,22 @@ currentday = 0;
 
 function loop(){
 	
-	/*x = 100
-	y = ?
+	nrecovered.innerHTML = qtdrecovered * 100/ sizepopulation + " %" 
+	nsick.innerHTML = qtdinfecteds * 100/ sizepopulation + " %" 
+	nhealthy.innerHTML = (sizepopulation - (qtdinfecteds + qtdrecovered)) * 100/ sizepopulation + " %" ;
+
 	
-	y*100 = x * ?
-	y*100/x = ?*/
-	
-	
-	
-	
-	context.clearRect(0,0,500,500);
+	context.clearRect(0,0,canvas.width,canvas.height);
 	
 	var changeday = false;
 	if(lastday != currentday){
+		
 		changeday = true;
 		lastday = currentday;
-		
-		console.log("Day: " + currentday )
-		console.log("Infected: "+ qtdinfecteds * 100/ sizepopulation + " %"  )
-		console.log("Recovered: "+ qtdrecovered * 100/ sizepopulation + " %" )
 		
 	}
 	
 	
-	//console.log(day);
 	for(i=0; i < sizepopulation; i++){
 		population[i].print(context);
 		population[i].mover();
@@ -209,6 +221,8 @@ function loop(){
 
 	}
 	
+	printDataCanvas();
+	
 	
 	window.setTimeout( function() {
 	requestAnimationFrame(loop)}
@@ -217,11 +231,34 @@ function loop(){
 	
 }
 
+function printDataCanvas(){
+	
+	context2.fillStyle = "#79a6d2";
+	context2.fillRect(0,0, canvas.width,canvas.height);
+	
+	for(var i = 0; i < arrayQtdinfecteds.length; i++){
+		context2.fillStyle = "#cc2900";
+		context2.fillRect( i/4, 100 - arrayQtdinfecteds[i], 1 , arrayQtdinfecteds[i]);
+		
+		//context2.fillStyle = "#ff66ff";
+		//context2.fillRect( i/4, 0, 1 , arrayQtdrecovered[i]);
+		
+		//arrayQtdrecovered[i];
+	}
+	
+}
+//controlling days
 window.setInterval( function(){
 	hours++;
-	//console.log(hours, hours/24);
-	currentday = parseInt( hours/ 60 ) ;
-}, 10);
+	currentday = parseInt( hours/ 30 ) ;
+}, 20);
+
+currentIndex = 0;
+
+window.setInterval( function(){
+	arrayQtdinfecteds[currentIndex++ ] = qtdinfecteds;
+	arrayQtdrecovered[currentIndex++ ] = qtdrecovered;
+}, 30);
 
 
 window.requestAnimationFrame(loop);
