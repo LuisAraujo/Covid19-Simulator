@@ -12,7 +12,6 @@ context2 = canvas2.getContext("2d");
 
 sim = new Simulator();
 sim.mode = "free";
-
 vis = new Visualizator();
 
 sim.startPopulation();

@@ -39,7 +39,7 @@ class Simulator{
 			
 			if(this.mode == "severe")
 			//severe isolation;
-			if(Math.random() < 0.95){
+			if(Math.random() < 0.8){
 				this.population[i].quarantine = true;
 			}
 			
